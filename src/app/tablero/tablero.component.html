@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablero</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 20px;
+    }
+
+    td {
+      width: 80px;
+      height: 80px;
+      border: 1px solid #000;
+      text-align: center;
+      font-size: 18px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div>
+  <table>
+    <tbody>
+      
+    <tr id="A">
+        <td class="text-black" id="A1"></td>
+        <td class="geografia" id="A2"></td>
+        <td class="entretenimiento" id="A3"></td>
+        <td class="historia" id="A4"></td>
+        <td class="arte-y-literatura" id="A5"></td>
+        <td class="ciencias-y-naturaleza" id="A6"></td>
+        <td class="deportes-y-pasatiempos" id="A7"></td>
+        <td class="geografia" id="A8"></td>
+        <td class="historia" id="A9"></td>
+        <td class="arte-y-literatura" id="A10"></td>
+        <td class="ciencias-y-naturaleza" id="A11"></td>
+      </tr>
+      <tr id="B">
+        <td class="deportes-y-pasatiempos" id="B1"></td>
+        <td colspan="9" rowspan="9" class="espacio" id="B2"></td>
+        <td class="geografia" id="B3"></td>
+      </tr>
+      <tr id="C">
+        <td class="historia"></td>
+        <td class="entretenimiento"></td>
+      </tr>
+      <tr id="D">
+        <td class="ciencias-y-naturaleza"></td>
+        <td class="arte-y-literatura"></td>
+      </tr>
+      <tr id="E">
+        <td class="deportes-y-pasatiempos"></td>
+        <td class="geografia"></td>
+      </tr>
+      <tr id="F">
+        <td class="historia"></td>
+        <td class="entretenimiento"></td>
+      </tr>
+      <tr id="G">
+        <td class="ciencias-y-naturaleza"></td>
+        <td class="arte-y-literatura"></td>
+      </tr>
+      <tr id="H">
+        <td class="deportes-y-pasatiempos"></td>
+        <td class="geografia"></td>
+      </tr>
+      <tr id="I">
+        <td class="historia"></td>
+        <td class="entretenimiento"></td>
+      </tr>
+      <tr id="J">
+        <td class="ciencias-y-naturaleza"></td>
+        <td class="arte-y-literatura"></td>
+      </tr>
+      <tr id="K">
+        <td class="deportes-y-pasatiempos"></td>
+        <td class="geografia"></td>
+        <td class="historia"></td>
+        <td class="arte-y-literatura"></td>
+        <td class="ciencias-y-naturaleza"></td>
+        <td class="deportes-y-pasatiempos"></td>
+        <td class="geografia"></td>
+        <td class="historia"></td>
+        <td class="arte-y-literatura"></td>
+        <td class="ciencias-y-naturaleza"></td>
+        <td class="deportes-y-pasatiempos"></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+<div class="dado">
+  <button (click)="tirarDado()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tirar los dados</button>
+  <h3 id="result" class="text-4xl font-bold text-center text-indigo-700 bg-white p-4 rounded shadow-md">{{ resultado }}</h3>
+</div>
+
+</body>
+</html>

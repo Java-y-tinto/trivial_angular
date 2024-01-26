@@ -1,0 +1,9 @@
+
+  <div class="cuestionario">
+    <h1>{{ enunciado }}</h1>
+ @for(index of respuestas; track index;){
+  <input type="checkbox" id="{{index.respuesta}}">&nbsp;{{index.respuesta}}<br>
+  <label for="{{index.respuesta}}"></label>
+ }
+
+  </div>

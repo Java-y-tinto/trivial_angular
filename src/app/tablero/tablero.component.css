@@ -1,0 +1,56 @@
+/* Agrega estilos específicos del componente aquí, además de las clases de Tailwind CSS */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+ body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 20px;
+    }
+
+    td {
+      width: 80px;
+      height: 80px;
+      border: 1px solid #000;
+      text-align: center;
+      font-size: 18px;
+      background-color: #fff;
+    }
+
+.geografia{
+    background-color: aqua;
+}
+.entretenimiento{
+    background-color: rgb(255, 115, 138);
+}
+  
+.historia{
+    background-color: yellow;
+}
+
+.arte-y-literatura{
+    background-color: purple;
+}
+.ciencias-y-naturaleza{
+    background-color: green;
+}
+.deportes-y-pasatiempos{
+    background-color: orange;
+}
+#inicio {
+    background-color: white;
+}
+.espacio{
+    background-color: #003980;
+}
+  /* Agrega más estilos personalizados según sea necesario */
+  
