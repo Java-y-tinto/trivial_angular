@@ -1,0 +1,12 @@
+app-cuestionario{
+    position: absolute;
+    z-index: 1;
+}
+#cuestionarioContainer{
+    position: absolute;
+    z-index: 1;
+
+}
+app-tablero{
+    position: relative;
+}

@@ -1,0 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+.cuestionario {
+    max-width: 400px;
+    margin: auto;
+  }

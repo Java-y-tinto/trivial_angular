@@ -6,7 +6,9 @@ import { TableroComponent } from './tablero/tablero.component'; // Asegúrate de
 import { DatabaseService } from './database.service';
 import { CrearComponenteService } from './crear-componente.service';
 import { Respuesta } from './respuesta';
-
+import { ComponentPortal } from '@angular/cdk/portal';
+import { Overlay } from '@angular/cdk/overlay';
+import { CuestionarioComponent } from './cuestionario/cuestionario.component';
 
 
 @Component({
@@ -15,8 +17,9 @@ import { Respuesta } from './respuesta';
   template: `<app-tablero (tiradaDado)="moverFicha($event)">
   <app-ficha [posX]="fichaPosX" [posY]="fichaPosY"></app-ficha>
 </app-tablero>
-<ng-container #cuestionarioContainer></ng-container>
+<ng-container id="cuestionarioContainer"></ng-container>
 ` ,
+styleUrl: './app.component.css',
   imports: [FichaComponent,TableroComponent]
 })
 
@@ -29,7 +32,7 @@ export class AppComponent implements OnInit  {
   arrayAEnviar: string[] = [];
 
   @ViewChild('cuestionarioContainer',{ static: true,read:ViewContainerRef }) cuestionarioContainer!: ViewContainerRef;
-  constructor(private dadoService: DadoService,private DB: DatabaseService,private cuestionario: CrearComponenteService,private cambios: ChangeDetectorRef) {}
+  constructor(private dadoService: DadoService,private DB: DatabaseService,private cuestionario: CrearComponenteService,private cambios: ChangeDetectorRef,private overlay: Overlay) {}
   ngOnInit(): void{
     console.log("He sido llamado en la funcion OnInit")
   this.DB.getPreguntaporCategoria("geografia").subscribe((val) =>{

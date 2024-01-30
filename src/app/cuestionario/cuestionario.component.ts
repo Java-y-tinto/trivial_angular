@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, AfterViewInit, Output } from '@angular/core';
 import { Respuesta } from '../respuesta';
+import { ComponentPortal } from '@angular/cdk/portal'
+import { Overlay,GlobalPositionStrategy,OverlayConfig,OverlayPositionBuilder } from '@angular/cdk/overlay'
+
+
 @Component({
   selector: 'app-cuestionario',
   standalone: true,
@@ -12,10 +16,13 @@ export class CuestionarioComponent implements AfterViewInit {
   @Input() enunciado!: string;
   @Input() respuestas!: Respuesta[];
   @Output() eventoCorreccion = new EventEmitter<boolean>();
+  
+  constructor(private overlay: Overlay) {}
+
   ngAfterViewInit(){
+    
     setTimeout(() => {
-      console.log(this.enunciado)
-      console.log(this.respuestas)
+      
     }, 3);
   }
   /*
