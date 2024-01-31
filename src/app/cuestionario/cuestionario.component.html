@@ -1,15 +1,21 @@
+<html>
 
+<body style="display: flex; flex-direction: column;">
   <div class="cuestionario p-4 bg-white rounded-md shadow-md">
     <h1 class="text-2x1 font-bold mb-4">{{ enunciado }}</h1>
- @for(index of respuestas; track index;){
-  <div class="mb-2">
-  <input type="checkbox" id="{{index.respuesta}}" class="checked:bg-blue-500 checked:border-transparent">&nbsp;{{index.respuesta}}<br>
-  <label for="{{index.respuesta}}" class="text-sm"></label>
-  
-    </div>
- }
- <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-  Enviar respuestas
-</button>
+      @for(index of respuestas; track index;){
+      <div class="mb-2">
+        <input type="radio" id="{{index.respuesta}}" class="checked:bg-blue-500 checked:border-transparent"
+          name="respuesta">&nbsp;{{index.respuesta}}<br>
+        <label for="{{index.respuesta}}" class="text-sm"></label>
 
+      </div>
+      }
+      <button
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="corregir()">
+        Enviar respuestas
+      </button>
   </div>
+</body>
+
+</html>

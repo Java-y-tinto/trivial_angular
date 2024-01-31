@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, AfterViewInit, Output } from '@angular/
 import { Respuesta } from '../respuesta';
 import { ComponentPortal } from '@angular/cdk/portal'
 import { Overlay,GlobalPositionStrategy,OverlayConfig,OverlayPositionBuilder } from '@angular/cdk/overlay'
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -11,24 +12,30 @@ import { Overlay,GlobalPositionStrategy,OverlayConfig,OverlayPositionBuilder } f
   templateUrl: './cuestionario.component.html',
   styleUrl: './cuestionario.component.css'
 })
-export class CuestionarioComponent implements AfterViewInit {
+export class CuestionarioComponent  {
   
   @Input() enunciado!: string;
   @Input() respuestas!: Respuesta[];
   @Output() eventoCorreccion = new EventEmitter<boolean>();
-  
   constructor(private overlay: Overlay) {}
-
-  ngAfterViewInit(){
-    
-    setTimeout(() => {
-      
-    }, 3);
-  }
-  /*
-  corregir(respuesta: string): void{
-    //pendiente de implementar
-    this.respuestaCorrecta.emit(true);
-  }
-  */
+  respuestaCorrecta: string = "";
+ corregir(){
+  var idCorrecta;
+  for (let index of this.respuestas){
+    var esCorrecta = index.esCorrecta;
+    if (esCorrecta == true){
+      idCorrecta = index.respuesta;
+      break;
+    }
+    }
+    var prueba = document.querySelector(`input[id=${idCorrecta}]:checked`)
+    if (prueba != null){
+      //La respuesta es correcta
+      this.eventoCorreccion.emit(true)
+    } else {
+      //La respuesta es incorrecta
+      this.eventoCorreccion.emit(false)
+    }
+ }
+ 
 }

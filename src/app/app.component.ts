@@ -3,13 +3,8 @@ import { Component, OnInit,ViewChild, ViewContainerRef, AfterViewInit,ChangeDete
 import { DadoService } from './dado.service'; // Asegúrate de tener el camino correcto hacia el servicio
 import { FichaComponent } from './ficha/ficha.component'; // Asegúrate de tener el camino correcto hacia el componente de ficha
 import { TableroComponent } from './tablero/tablero.component'; // Asegúrate de tener el camino correcto hacia el componente de tablero
-import { DatabaseService } from './database.service';
-import { CrearComponenteService } from './crear-componente.service';
 import { Respuesta } from './respuesta';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { Overlay } from '@angular/cdk/overlay';
-import { CuestionarioComponent } from './cuestionario/cuestionario.component';
-
+import { CrearpreguntaService } from './crearpregunta.service';
 
 @Component({
   standalone: true,
@@ -30,27 +25,14 @@ export class AppComponent implements OnInit  {
   consulta: string = "";
   respuestas: Respuesta[] = [];
   arrayAEnviar: string[] = [];
-
-  @ViewChild('cuestionarioContainer',{ static: true,read:ViewContainerRef }) cuestionarioContainer!: ViewContainerRef;
-  constructor(private dadoService: DadoService,private DB: DatabaseService,private cuestionario: CrearComponenteService,private cambios: ChangeDetectorRef,private overlay: Overlay) {}
+  constructor(private dadoService: DadoService,private crearPregunta: CrearpreguntaService) {}
   ngOnInit(): void{
-    console.log("He sido llamado en la funcion OnInit")
-  this.DB.getPreguntaporCategoria("geografia").subscribe((val) =>{
-    this.consulta = val[0].pregunta;
-    this.respuestas = [
-     {respuesta: val[0].respuestaCorrecta, esCorrecta: true},
-      {respuesta: val[0].respuestaIncorrecta1, esCorrecta: false},
-      {respuesta: val[0].respuestaIncorrecta2, esCorrecta:false},
-      {respuesta: val[0].respuestaIncorrecta3, esCorrecta:false}
-    ];
-   console.log(this.respuestas)
-    this.cuestionario.insertarCuestionario(this.cuestionarioContainer,this.consulta,this.respuestas)
-  });
+    this.crearPregunta.crearpregunta("geografia");
+    console.log(this.crearPregunta.esCorrecta);
   }
   moverFicha(resultadoDado: number): void {
     console.log('Resultado del dado:', resultadoDado);
     this.fichaPosX += resultadoDado * 50;
   }
-  
   
 }
