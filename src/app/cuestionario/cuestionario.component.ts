@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, AfterViewInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, AfterViewInit, Output, OnInit } from '@angular/core';
 import { Respuesta } from '../respuesta';
 import { ComponentPortal } from '@angular/cdk/portal'
 import { Overlay,GlobalPositionStrategy,OverlayConfig,OverlayPositionBuilder } from '@angular/cdk/overlay'
@@ -12,19 +12,40 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './cuestionario.component.html',
   styleUrl: './cuestionario.component.css'
 })
-export class CuestionarioComponent  {
+export class CuestionarioComponent implements OnInit {
   
   @Input() enunciado!: string;
   @Input() respuestas!: Respuesta[];
   @Output() eventoCorreccion = new EventEmitter<boolean>();
   constructor(private overlay: Overlay) {}
   respuestaCorrecta: string = "";
+  ngOnInit(): void {
+      this.mezclar()
+  }
+
+  mezclar(){
+    for (let i = this.respuestas.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.respuestas[i], this.respuestas[j]] = [this.respuestas[j], this.respuestas[i]];
+    }
+  }
+  normalizar(cadena: string) :string {
+    if (cadena.includes(' ')){
+    cadena = cadena.trim()
+    var cadenaSeparada = cadena.split(' ')
+    var ultimoPedazo = cadenaSeparada[cadenaSeparada.length - 1 ]
+    return ultimoPedazo
+    } else{
+      return cadena
+    }
+
+  }
  corregir(){
   var idCorrecta;
   for (let index of this.respuestas){
     var esCorrecta = index.esCorrecta;
     if (esCorrecta == true){
-      idCorrecta = index.respuesta;
+      idCorrecta = this.normalizar(index.respuesta);
       break;
     }
     }

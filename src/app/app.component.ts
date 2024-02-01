@@ -5,11 +5,12 @@ import { FichaComponent } from './ficha/ficha.component'; // Asegúrate de tener
 import { TableroComponent } from './tablero/tablero.component'; // Asegúrate de tener el camino correcto hacia el componente de tablero
 import { Respuesta } from './respuesta';
 import { CrearpreguntaService } from './crearpregunta.service';
+import { CrearComponenteService } from './crear-componente.service';
 
 @Component({
   standalone: true,
   selector: 'app-root',
-  template: `<app-tablero (tiradaDado)="moverFicha($event)">
+  template: `<app-tablero>
   <app-ficha [posX]="fichaPosX" [posY]="fichaPosY"></app-ficha>
 </app-tablero>
 <ng-container id="cuestionarioContainer"></ng-container>
@@ -25,11 +26,18 @@ export class AppComponent implements OnInit  {
   consulta: string = "";
   respuestas: Respuesta[] = [];
   arrayAEnviar: string[] = [];
-  constructor(private dadoService: DadoService,private crearPregunta: CrearpreguntaService) {}
+  constructor(private dadoService: DadoService,private crearPregunta: CrearpreguntaService,private prueba: CrearComponenteService) {}
   ngOnInit(): void{
-    this.crearPregunta.crearpregunta("geografia");
-    console.log(this.crearPregunta.esCorrecta);
+  
   }
+  insertarCuestionario(categoria:string,accion:(preguntaEsCorrecta:boolean)=> void){
+    this.crearPregunta.crearpregunta(categoria);
+    var sub = this.prueba.esCorrecta$.subscribe((val) =>{
+      accion(val)
+      sub.unsubscribe();
+    })
+  }
+
   moverFicha(resultadoDado: number): void {
     console.log('Resultado del dado:', resultadoDado);
     this.fichaPosX += resultadoDado * 50;

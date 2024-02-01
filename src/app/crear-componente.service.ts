@@ -23,7 +23,6 @@ export class CrearComponenteService {
     const componentRef = overlayRef.attach(componentPortal);    
     componentRef.instance.enunciado = enunciado;
     componentRef.instance.respuestas = respuestas;
-   
     componentRef.instance.eventoCorreccion.subscribe((val)=>{
       this.actualizarCorreccion(val);
       componentRef.instance.eventoCorreccion.unsubscribe()

@@ -5,8 +5,13 @@
     <h1 class="text-2x1 font-bold mb-4">{{ enunciado }}</h1>
       @for(index of respuestas; track index;){
       <div class="mb-2">
-        <input type="radio" id="{{index.respuesta}}" class="checked:bg-blue-500 checked:border-transparent"
+        @if(index.respuesta.includes(' ')){
+        <input type="radio" id="{{normalizar(index.respuesta)}}" class="checked:bg-blue-500 checked:border-transparent"
           name="respuesta">&nbsp;{{index.respuesta}}<br>
+      } @else{
+        <input type="radio" id="{{index.respuesta}}" class="checked:bg-blue-500 checked:border-transparent"
+        name="respuesta">&nbsp;{{index.respuesta}}<br>
+      }
         <label for="{{index.respuesta}}" class="text-sm"></label>
 
       </div>

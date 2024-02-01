@@ -14,6 +14,7 @@
       height: 100vh;
       margin: 0;
       background-color: #f4f4f4;
+      position: relative;
     }
 
     table {
@@ -28,16 +29,27 @@
       text-align: center;
       font-size: 18px;
       background-color: #fff;
+      position: relative;
+    }
+    .ficha {
+      width: 40px; /* Tamaño de la ficha */
+      height: 40px;
+      background-color: red; /* Color de la ficha */
+      position: absolute; /* Posicionamiento absoluto con respecto al td */
+      top: 50%; /* Centrar verticalmente en el td */
+      left: 50%; /* Centrar horizontalmente en el td */
+      transform: translate(-50%, -50%); /* Ajuste para centrar */
+      border-radius: 50%; /* Para que la ficha sea redonda */
     }
   </style>
 </head>
 <body>
   <div>
-  <table>
+  <table id="tablero">
     <tbody>
       
     <tr id="A">
-        <td class="text-black" id="A1"></td>
+        <td class="arte-y-literatura" [@moverFicha] id="A1"></td>
         <td class="geografia" id="A2"></td>
         <td class="entretenimiento" id="A3"></td>
         <td class="historia" id="A4"></td>
@@ -50,57 +62,138 @@
         <td class="ciencias-y-naturaleza" id="A11"></td>
       </tr>
       <tr id="B">
-        <td class="deportes-y-pasatiempos" id="B1"></td>
-        <td colspan="9" rowspan="9" class="espacio" id="B2"></td>
-        <td class="geografia" id="B3"></td>
+        <td class="historia" id="B1"></td>
+        <td class="geografia" id="B2"></td>
+        <td class="entretenimiento" id="B3"></td>
+        <td class="historia" id="B4"></td>
+        <td class="arte-y-literatura" id="B5"></td>
+        <td class="ciencias-y-naturaleza" id="B6"></td>
+        <td class="deportes-y-pasatiempos" id="B7"></td>
+        <td class="geografia" id="B8"></td>
+        <td class="historia" id="B9"></td>
+        <td class="arte-y-literatura" id="B10"></td>
+        <td class="ciencias-y-naturaleza" id="B11"></td>
       </tr>
       <tr id="C">
-        <td class="historia"></td>
-        <td class="entretenimiento"></td>
+        <td class="entretenimiento" id="C1"></td>
+        <td class="geografia" id="C2"></td>
+        <td class="entretenimiento" id="C3"></td>
+        <td class="historia" id="C4"></td>
+        <td class="arte-y-literatura" id="C5"></td>
+        <td class="ciencias-y-naturaleza" id="C6"></td>
+        <td class="deportes-y-pasatiempos" id="C7"></td>
+        <td class="geografia" id="C8"></td>
+        <td class="historia" id="C9"></td>
+        <td class="arte-y-literatura" id="C10"></td>
+        <td class="ciencias-y-naturaleza" id="C11"></td>
       </tr>
       <tr id="D">
-        <td class="ciencias-y-naturaleza"></td>
-        <td class="arte-y-literatura"></td>
+        <td class="arte-y-literatura" id="D1"></td>
+        <td class="geografia" id="D2"></td>
+        <td class="entretenimiento" id="D3"></td>
+        <td class="historia" id="D4"></td>
+        <td class="arte-y-literatura" id="D5"></td>
+        <td class="ciencias-y-naturaleza" id="D6"></td>
+        <td class="deportes-y-pasatiempos" id="D7"></td>
+        <td class="geografia" id="D8"></td>
+        <td class="historia" id="D9"></td>
+        <td class="arte-y-literatura" id="D10"></td>
+        <td class="ciencias-y-naturaleza" id="D11"></td>
       </tr>
       <tr id="E">
-        <td class="deportes-y-pasatiempos"></td>
-        <td class="geografia"></td>
+        <td class="deportes-y-pasatiempos" id="E1"></td>
+        <td class="geografia" id="E2"></td>
+        <td class="entretenimiento" id="E3"></td>
+        <td class="historia" id="E4"></td>
+        <td class="arte-y-literatura" id="E5"></td>
+        <td class="ciencias-y-naturaleza" id="E6"></td>
+        <td class="deportes-y-pasatiempos" id="E7"></td>
+        <td class="geografia" id="E8"></td>
+        <td class="historia" id="E9"></td>
+        <td class="arte-y-literatura" id="E10"></td>
+        <td class="ciencias-y-naturaleza" id="E11"></td>
       </tr>
       <tr id="F">
-        <td class="historia"></td>
-        <td class="entretenimiento"></td>
+        <td class="historia" id="F1"></td>
+        <td class="entretenimiento" id="F2"></td>
+        <td class="historia" id="F3"></td>
+        <td class="geografia" id="F4"></td>
+        <td class="entretenimiento" id="F5"></td>
+        <td class="historia" id="F6"></td>
+        <td class="arte-y-literatura" id="F7"></td>
+        <td class="ciencias-y-naturaleza" id="F8"></td>
+        <td class="deportes-y-pasatiempos" id="F9"></td>
+        <td class="geografia" id="F10"></td>
+        <td class="historia" id="F11"></td>
       </tr>
       <tr id="G">
-        <td class="ciencias-y-naturaleza"></td>
-        <td class="arte-y-literatura"></td>
+        <td class="historia" id="G1"></td>
+        <td class="geografia" id="G2"></td>
+        <td class="entretenimiento" id="G3"></td>
+        <td class="historia" id="G4"></td>
+        <td class="arte-y-literatura" id="G5"></td>
+        <td class="ciencias-y-naturaleza" id="G6"></td>
+        <td class="deportes-y-pasatiempos" id="G7"></td>
+        <td class="geografia" id="G8"></td>
+        <td class="historia" id="G9"></td>
+        <td class="arte-y-literatura" id="G10"></td>
+        <td class="ciencias-y-naturaleza" id="G11"></td>
       </tr>
       <tr id="H">
-        <td class="deportes-y-pasatiempos"></td>
-        <td class="geografia"></td>
+        <td class="historia" id="H1"></td>
+        <td class="geografia" id="H2"></td>
+        <td class="entretenimiento" id="H3"></td>
+        <td class="historia" id="H4"></td>
+        <td class="arte-y-literatura" id="H5"></td>
+        <td class="ciencias-y-naturaleza" id="H6"></td>
+        <td class="deportes-y-pasatiempos" id="H7"></td>
+        <td class="geografia" id="H8"></td>
+        <td class="historia" id="H9"></td>
+        <td class="arte-y-literatura" id="H10"></td>
+        <td class="ciencias-y-naturaleza" id="H11"></td>
       </tr>
       <tr id="I">
-        <td class="historia"></td>
-        <td class="entretenimiento"></td>
+        <td class="historia" id="I1"></td>
+        <td class="geografia" id="I2"></td>
+        <td class="entretenimiento" id="I3"></td>
+        <td class="historia" id="I4"></td>
+        <td class="arte-y-literatura" id="I5"></td>
+        <td class="ciencias-y-naturaleza" id="I6"></td>
+        <td class="deportes-y-pasatiempos" id="I7"></td>
+        <td class="geografia" id="I8"></td>
+        <td class="historia" id="I9"></td>
+        <td class="arte-y-literatura" id="I10"></td>
+        <td class="ciencias-y-naturaleza" id="I11"></td>
       </tr>
       <tr id="J">
-        <td class="ciencias-y-naturaleza"></td>
-        <td class="arte-y-literatura"></td>
+        <td class="historia" id="J1"></td>
+        <td class="geografia" id="J2"></td>
+        <td class="entretenimiento" id="J3"></td>
+        <td class="historia" id="J4"></td>
+        <td class="arte-y-literatura" id="J5"></td>
+        <td class="ciencias-y-naturaleza" id="J6"></td>
+        <td class="deportes-y-pasatiempos" id="J7"></td>
+        <td class="geografia" id="J8"></td>
+        <td class="historia" id="J9"></td>
+        <td class="arte-y-literatura" id="J10"></td>
+        <td class="ciencias-y-naturaleza" id="J11"></td>
       </tr>
       <tr id="K">
-        <td class="deportes-y-pasatiempos"></td>
-        <td class="geografia"></td>
-        <td class="historia"></td>
-        <td class="arte-y-literatura"></td>
-        <td class="ciencias-y-naturaleza"></td>
-        <td class="deportes-y-pasatiempos"></td>
-        <td class="geografia"></td>
-        <td class="historia"></td>
-        <td class="arte-y-literatura"></td>
-        <td class="ciencias-y-naturaleza"></td>
-        <td class="deportes-y-pasatiempos"></td>
+        <td class="deportes-y-pasatiempos" id="K1"></td>
+        <td class="geografia" id="K2"></td>
+        <td class="historia" id="K3"></td>
+        <td class="arte-y-literatura" id="K4"></td>
+        <td class="ciencias-y-naturaleza" id="K5"></td>
+        <td class="deportes-y-pasatiempos" id="K6"></td>
+        <td class="geografia" id="K7"></td>
+        <td class="historia" id="K8"></td>
+        <td class="arte-y-literatura" id="K9"></td>
+        <td class="ciencias-y-naturaleza" id="K10"></td>
+        <td class="deportes-y-pasatiempos" id="K11"></td>
       </tr>
     </tbody>
   </table>
+  <div id="ficha" class="ficha"></div>
   </div>
 
 <div class="dado">
