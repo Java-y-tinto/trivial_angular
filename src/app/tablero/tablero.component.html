@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      display: flex;
+      display: flexbox;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -41,6 +41,18 @@
       transform: translate(-50%, -50%); /* Ajuste para centrar */
       border-radius: 50%; /* Para que la ficha sea redonda */
     }
+    td > .ficha {
+      width: 40px; /* Tamaño de la ficha */
+      height: 40px;
+      background-color: red; /* Color de la ficha */
+      position: absolute; /* Posicionamiento absoluto con respecto al td */
+      top: 50%; /* Centrar verticalmente en el td */
+      left: 50%; /* Centrar horizontalmente en el td */
+      transform: translate(-50%, -50%); /* Ajuste para centrar */
+      border-radius: 50%; /* Para que la ficha sea redonda */
+      display: block;
+      visibility: visible;
+    }
   </style>
 </head>
 <body>
@@ -49,7 +61,7 @@
     <tbody>
       
     <tr id="A">
-        <td class="arte-y-literatura" [@moverFicha] id="A1"></td>
+        <td class="arte-y-literatura" id="A1"></td>
         <td class="geografia" id="A2"></td>
         <td class="entretenimiento" id="A3"></td>
         <td class="historia" id="A4"></td>

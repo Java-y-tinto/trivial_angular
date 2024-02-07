@@ -9,8 +9,8 @@
 
 <main>
 
-<app-root>
-  <app-tablero (tiradaDado)="moverFicha($event)">
+<app-root (tiradaDado)="moverFicha($event)">
+  <app-tablero>
     <app-ficha [posX]="fichaPosX" [posY]="fichaPosY"></app-ficha>
   </app-tablero>
   <ng-container id="cuestionarioContainer"></ng-container>

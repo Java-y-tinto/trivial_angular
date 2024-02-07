@@ -6,6 +6,7 @@ import { TableroComponent } from './tablero/tablero.component'; // Asegúrate de
 import { Respuesta } from './respuesta';
 import { CrearpreguntaService } from './crearpregunta.service';
 import { CrearComponenteService } from './crear-componente.service';
+import { Casilla } from './casilla';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit  {
   consulta: string = "";
   respuestas: Respuesta[] = [];
   arrayAEnviar: string[] = [];
+  
   constructor(private dadoService: DadoService,private crearPregunta: CrearpreguntaService,private prueba: CrearComponenteService) {}
   ngOnInit(): void{
   
@@ -38,9 +40,7 @@ export class AppComponent implements OnInit  {
     })
   }
 
-  moverFicha(resultadoDado: number): void {
-    console.log('Resultado del dado:', resultadoDado);
-    this.fichaPosX += resultadoDado * 50;
+  moverFicha(resultadoDado: Casilla[]): void {
+    console.log(resultadoDado)
   }
-  
 }
