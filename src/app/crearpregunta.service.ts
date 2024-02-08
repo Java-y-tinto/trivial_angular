@@ -23,9 +23,10 @@ export class CrearpreguntaService {
            {respuesta: preguntaElegida.respuestaIncorrecta2, esCorrecta:false},
            {respuesta: preguntaElegida.respuestaIncorrecta3, esCorrecta:false}
          ];
+         console.log("Recibido",this.enunciado,this.respuestas)
       })
       setTimeout(() => {
         this.cuestionario.insertarCuestionario(this.enunciado,this.respuestas)
-      }, 3);
+      }, 13);
   }
 }

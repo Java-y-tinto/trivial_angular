@@ -19,6 +19,7 @@ export class CuestionarioComponent implements OnInit {
   @Output() eventoCorreccion = new EventEmitter<boolean>();
   constructor(private overlay: Overlay) {}
   respuestaCorrecta: string = "";
+  primeraRespuesta: boolean = true;
   ngOnInit(): void {
       this.mezclar()
   }
@@ -40,23 +41,35 @@ export class CuestionarioComponent implements OnInit {
     }
 
   }
- corregir(){
-  var idCorrecta;
-  for (let index of this.respuestas){
-    var esCorrecta = index.esCorrecta;
-    if (esCorrecta == true){
-      idCorrecta = this.normalizar(index.respuesta);
-      break;
+  corregir() {
+    var idCorrecta;
+    
+    for (let index of this.respuestas) {
+      var esCorrecta = index.esCorrecta;
+  
+      if (esCorrecta == true) {
+        idCorrecta = this.normalizar(index.respuesta);
+        break;
+      }
     }
-    }
-    var prueba = document.querySelector(`input[id=${idCorrecta}]:checked`)
-    if (prueba != null){
-      //La respuesta es correcta
-      this.eventoCorreccion.emit(true)
+  
+    var prueba = document.querySelector(`input[id='${idCorrecta}']:checked`);
+  
+    if (prueba != null) {
+      // La respuesta es correcta, emitir evento solo si no es la primera vez
+      if (!this.primeraRespuesta) {
+        this.eventoCorreccion.emit(true);
+      }
     } else {
-      //La respuesta es incorrecta
-      this.eventoCorreccion.emit(false)
+      // La respuesta es incorrecta, emitir evento solo si no es la primera vez
+      if (!this.primeraRespuesta) {
+        this.eventoCorreccion.emit(false);
+      }
     }
- }
+  
+    // Después de la primera respuesta, establecer la bandera en false
+    this.primeraRespuesta = false;
+  }
+  
  
 }

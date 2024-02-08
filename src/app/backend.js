@@ -38,7 +38,22 @@ servidor.get('/prueba',async (req,res) => {
 servidor.get('/preguntas/:categoria',async (req,res) =>{
     const categoria = req.params.categoria
     console.log(categoria)
-    await conexion.query('SELECT * FROM PREGUNTA WHERE categoriaPregunta=?',[categoria], async(err,resultado) =>{
+    var categoriaparaquery=""
+    switch (categoria){
+        case "arte-y-literatura":
+            categoriaparaquery ="Arte y Literatura"
+            break;
+        case "ciencias-y-naturaleza":
+            categoriaparaquery="Ciencias y Naturaleza"           
+            break;
+        case "deportes-y-pasatiempos":
+            categoriaparaquery="Deportes y Pasatiempos"
+            break;
+        default:
+            categoriaparaquery=categoria
+            break;    
+    }
+    await conexion.query('SELECT * FROM PREGUNTA WHERE categoriaPregunta=?',[categoriaparaquery], async(err,resultado) =>{
         if(err){
             console.error("Ha habido un error al consultar la base de datos: " + err)
         } else {

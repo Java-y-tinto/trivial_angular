@@ -17,7 +17,7 @@ export class CrearComponenteService {
 
   constructor(private overlay: Overlay) { }
   insertarCuestionario(enunciado: string,respuestas: Respuesta[]){
-    console.log("Me han llamado en el servicio")
+    console.log("Me han llamado en el servicio",enunciado,respuestas)
     const overlayRef = this.createOverlay();
     const componentPortal = new ComponentPortal(CuestionarioComponent);
     const componentRef = overlayRef.attach(componentPortal);    

@@ -1,20 +1,25 @@
 // tablero.component.ts
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { Casilla } from '../casilla';
 import { trigger, state, style, animate, transition } from '@angular/animations'
-import { ComunicacionTableroMainService } from '../comunicacion-tablero-main.service';
+import { Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
   styleUrls: ['./tablero.component.css'],
   standalone: true
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class TableroComponent implements OnInit {
   resultado: string = "Tira los dados!";
-  puedeTirar: boolean = true;
+  public puedeTirar: boolean = true;
   estadoFicha: string = "A1"
-  respuesta: Casilla[] = [];
-  constructor(private comunicacion: ComunicacionTableroMainService) {}
+  respuesta: Casilla = {categoria:  "",posicion: ""}
+  constructor(private elementRef: ElementRef) {}
   ngOnInit(): void {
     var categorias = ["arte-y-literatura", "geografia", "entretenimiento", "historia", "ciencias-y-naturaleza", "deportes-y-pasatiempos"];
 
@@ -46,11 +51,15 @@ export class TableroComponent implements OnInit {
     }
 
   }
-  @Output() tiradaDado = new EventEmitter<Casilla[]>();
-
+  @Output() tiradaDado$ = new EventEmitter<Casilla>();
+  buscarFicha(): string{
+    const td = this.elementRef.nativeElement.querySelector('td > div').parentElement;
+    return td.id
+  }
+  permitirtirada(): void{this.puedeTirar=true}
+  restringirtirada(): void{this.puedeTirar=false}
   tirarDado(): void {
     const filas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
-    
     if (this.puedeTirar) {
       const tirada = Math.floor(Math.random() * (6 - 1)) + 1;
       this.resultado = "Resultado: " + tirada;
@@ -103,9 +112,10 @@ export class TableroComponent implements OnInit {
           div.style.position = 'absolute';
       //    div.style.left = `${centerLeft}px`;
         //  div.style.top = `${centerTop}px`;
-          this.respuesta = [{categoria: casillaDestino.className,posicion:casillaDestino.id}];
-          this.tiradaDado.emit(this.respuesta)
-          this.comunicacion.recibirEvento(this.tiradaDado)
+          this.respuesta.categoria= casillaDestino.className
+          this.respuesta.posicion= casillaDestino.id;
+          this.tiradaDado$.emit(this.respuesta)
+          this.restringirtirada
       }
       }
     }
