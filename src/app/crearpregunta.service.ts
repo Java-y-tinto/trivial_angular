@@ -27,6 +27,6 @@ export class CrearpreguntaService {
       })
       setTimeout(() => {
         this.cuestionario.insertarCuestionario(this.enunciado,this.respuestas)
-      }, 13);
+      }, 30);
   }
 }

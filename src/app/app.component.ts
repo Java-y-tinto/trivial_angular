@@ -26,9 +26,11 @@ export class AppComponent implements OnInit  {
     }
   ngOnInit(): void{
     console.log("Aplicacion iniciada")
+  
     
   }
   manejaraterrizaje(casilla: Casilla){
+    
    this.insertarCuestionario(casilla.categoria,(preguntaEsCorrecta: boolean)=>{
     console.log("Respuesta: ",preguntaEsCorrecta)
       if (preguntaEsCorrecta){
@@ -47,9 +49,10 @@ export class AppComponent implements OnInit  {
       console.log(this.tablero.buscarFicha())
     }
     if (this.prueba.esCorrecta$) {
-      this.sub = this.prueba.esCorrecta$.subscribe(async (val) => {
+      this.sub = this.prueba.esCorrecta$.subscribe((val) => {
         accion(val);
-        await this.sub.unsubscribe();
+        this.sub.unsubscribe();
+        this.tablero.permitirtirada();
       });
     } else {
       console.error("La suscripción esCorrecta$ no está definida.");

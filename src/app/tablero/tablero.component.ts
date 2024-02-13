@@ -49,16 +49,22 @@ export class TableroComponent implements OnInit {
     } else {
       console.error("El elemento con ID 'A1' o 'ficha' no fue encontrado.");
     }
-
+    this.tirarDado()
+    console.log("1")
+    this.restringirtirada()
+    this.tirarDado()
+    this.permitirtirada()
+    this.tirarDado()
   }
   @Output() tiradaDado$ = new EventEmitter<Casilla>();
   buscarFicha(): string{
     const td = this.elementRef.nativeElement.querySelector('td > div').parentElement;
     return td.id
   }
-  permitirtirada(): void{this.puedeTirar=true}
+  permitirtirada(): void{this.puedeTirar=true; console.log("Puede tirar: ",this.puedeTirar)}
   restringirtirada(): void{this.puedeTirar=false}
   tirarDado(): void {
+    console.log(this.puedeTirar)
     const filas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
     if (this.puedeTirar) {
       const tirada = Math.floor(Math.random() * (6 - 1)) + 1;
@@ -115,7 +121,7 @@ export class TableroComponent implements OnInit {
           this.respuesta.categoria= casillaDestino.className
           this.respuesta.posicion= casillaDestino.id;
           this.tiradaDado$.emit(this.respuesta)
-          this.restringirtirada
+          this.restringirtirada();
       }
       }
     }
