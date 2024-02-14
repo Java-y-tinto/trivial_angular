@@ -1,8 +1,10 @@
 // tablero.component.ts
 import { Component, ElementRef, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { Casilla } from '../casilla';
-import { trigger, state, style, animate, transition } from '@angular/animations'
 import { Observable, Subject } from 'rxjs';
+import { GestordeturnosService } from '../gestordeturnos.service';
+import { take } from 'rxjs';
+
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
@@ -16,10 +18,10 @@ import { Observable, Subject } from 'rxjs';
 
 export class TableroComponent implements OnInit {
   resultado: string = "Tira los dados!";
-  public puedeTirar: boolean = true;
+ // public puedeTirar: boolean = true;
   estadoFicha: string = "A1"
   respuesta: Casilla = {categoria:  "",posicion: ""}
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef,private turnos: GestordeturnosService) {}
   ngOnInit(): void {
     var categorias = ["arte-y-literatura", "geografia", "entretenimiento", "historia", "ciencias-y-naturaleza", "deportes-y-pasatiempos"];
 
@@ -49,24 +51,23 @@ export class TableroComponent implements OnInit {
     } else {
       console.error("El elemento con ID 'A1' o 'ficha' no fue encontrado.");
     }
-    this.tirarDado()
-    console.log("1")
-    this.restringirtirada()
-    this.tirarDado()
-    this.permitirtirada()
-    this.tirarDado()
   }
   @Output() tiradaDado$ = new EventEmitter<Casilla>();
   buscarFicha(): string{
     const td = this.elementRef.nativeElement.querySelector('td > div').parentElement;
     return td.id
   }
-  permitirtirada(): void{this.puedeTirar=true; console.log("Puede tirar: ",this.puedeTirar)}
-  restringirtirada(): void{this.puedeTirar=false}
+  permitirtirada(): void{
+    this.turnos.permitirTirada();
+  }
+  restringirtirada(): void{
+    this.turnos.restringirTirada();
+  }
   tirarDado(): void {
-    console.log(this.puedeTirar)
+    this.turnos.puedetirar$.pipe(take(1)).subscribe((puedeTirar) =>{
+      console.log(puedeTirar)
     const filas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
-    if (this.puedeTirar) {
+    if (puedeTirar) {
       const tirada = Math.floor(Math.random() * (6 - 1)) + 1;
       this.resultado = "Resultado: " + tirada;
   
@@ -125,6 +126,7 @@ export class TableroComponent implements OnInit {
       }
       }
     }
+  })
   }
   
 }

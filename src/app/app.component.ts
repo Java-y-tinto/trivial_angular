@@ -7,6 +7,7 @@ import { CrearpreguntaService } from './crearpregunta.service';
 import { CrearComponenteService } from './crear-componente.service';
 import { Casilla } from './casilla';
 import { Subscription } from 'rxjs';
+import { GestordeturnosService } from './gestordeturnos.service';
 
 @Component({
   standalone: true,
@@ -15,18 +16,23 @@ import { Subscription } from 'rxjs';
 <ng-container id="cuestionarioContainer"></ng-container>
 ` ,
 styleUrl: './app.component.css',
-  imports: [FichaComponent,TableroComponent]
+  imports: [FichaComponent,TableroComponent],
+  providers: [GestordeturnosService,CrearpreguntaService,CrearComponenteService]
 })
 
 
 export class AppComponent implements OnInit  {
   respuestas: Respuesta[] = [];
   sub: Subscription = new Subscription();
-  constructor(private crearPregunta: CrearpreguntaService,private prueba: CrearComponenteService,private tablero: TableroComponent) {
+  constructor(private crearPregunta: CrearpreguntaService,private prueba: CrearComponenteService,private tablero: TableroComponent,private gestorDeTurnos: GestordeturnosService) {
     }
   ngOnInit(): void{
     console.log("Aplicacion iniciada")
   
+    
+  }
+  ngAfterViewInit(): void {
+    console.log("Desde fuera");
     
   }
   manejaraterrizaje(casilla: Casilla){
@@ -52,7 +58,7 @@ export class AppComponent implements OnInit  {
       this.sub = this.prueba.esCorrecta$.subscribe((val) => {
         accion(val);
         this.sub.unsubscribe();
-        this.tablero.permitirtirada();
+        this.gestorDeTurnos.permitirTirada();
       });
     } else {
       console.error("La suscripción esCorrecta$ no está definida.");
