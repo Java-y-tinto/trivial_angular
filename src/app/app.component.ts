@@ -37,7 +37,7 @@ export class AppComponent implements OnInit  {
   }
   manejaraterrizaje(casilla: Casilla){
     
-   this.insertarCuestionario(casilla.categoria,(preguntaEsCorrecta: boolean)=>{
+   this.insertarCuestionario(casilla.categoria,(preguntaEsCorrecta: boolean,categoria:string)=>{
     console.log("Respuesta: ",preguntaEsCorrecta)
       if (preguntaEsCorrecta){
         
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit  {
       }
   })
   }
-  insertarCuestionario(categoria: string, accion: (preguntaEsCorrecta: boolean) => void) {
+  insertarCuestionario(categoria: string, accion: (preguntaEsCorrecta: boolean,categoria: string) => void) {
     if (categoria != ""){
       console.log(categoria)
     this.crearPregunta.crearpregunta(categoria);
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit  {
     }
     if (this.prueba.esCorrecta$) {
       this.sub = this.prueba.esCorrecta$.subscribe((val) => {
-        accion(val);
+        accion(val,categoria);
         this.sub.unsubscribe();
         this.gestorDeTurnos.permitirTirada();
       });
