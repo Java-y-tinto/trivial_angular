@@ -21,6 +21,54 @@ export class TableroComponent implements OnInit {
  // public puedeTirar: boolean = true;
   estadoFicha: string = "A1"
   respuesta: Casilla = {categoria:  "",posicion: ""}
+  public colorDefecto = "#000000"
+  public colorGeografia = "#00ffff"
+  public colorEntretenimiento = "#ff738a"
+  public colorHistoria = "#ffff00"
+  public colorDeportes = "#ffa500"
+  public colorCiencias = "#008000"
+  public colorArte = "#800080"
+
+  public quesitoGeografia = document.getElementById("geografia");
+  public quesitoHistoria = document.getElementById("historia");
+  /*
+   id="arte-y-literatura"></div>
+ id="historia"></div>
+ id="entretenimiento"></div>
+ id="ciencias-y-naturaleza"></div>
+ id="geografia"></div>
+ id="deportes-y-pasatiempos"></div>
+  */
+  public quesitoDeporte = document.getElementById("deportes-y-pasamientos")
+  public quesitoEntretenimiento = document.getElementById("entretenimiento")
+  public quesitoArte = document.getElementById("arte-y-literatura")
+  public quesitoCiencias = document.getElementById("ciencias-y-naturaleza")
+
+  cambiarColor(categoria:string): void{
+    switch(categoria){
+      case "geografia":
+        this.quesitoGeografia!.style.backgroundColor=this.colorGeografia
+        break;
+      case "historia":
+        this.quesitoHistoria!.style.backgroundColor=this.colorHistoria
+        break;
+      case "entretenimiento":
+        this.quesitoEntretenimiento!.style.backgroundColor=this.colorEntretenimiento
+        break;
+      case "arte-y-literatura":
+        this.quesitoArte!.style.backgroundColor=this.colorArte
+        break;
+      case "ciencias-y-naturaleza":
+        this.quesitoCiencias!.style.backgroundColor=this.colorCiencias
+        break;
+      case "deportes-y-pasamientos":
+        this.quesitoDeporte!.style.backgroundColor=this.colorDeportes
+        break;
+      default:
+        break;
+    }
+  }
+
   constructor(private elementRef: ElementRef,private turnos: GestordeturnosService) {}
   ngOnInit(): void {
     var categorias = ["arte-y-literatura", "geografia", "entretenimiento", "historia", "ciencias-y-naturaleza", "deportes-y-pasatiempos"];
