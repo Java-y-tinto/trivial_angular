@@ -8,6 +8,7 @@ import { CrearComponenteService } from './crear-componente.service';
 import { Casilla } from './casilla';
 import { Subscription } from 'rxjs';
 import { GestordeturnosService } from './gestordeturnos.service';
+import { QuesitosService } from './quesitos.service';
 
 @Component({
   standalone: true,
@@ -21,28 +22,28 @@ styleUrl: './app.component.css',
 })
 
 
-export class AppComponent implements OnInit  {
+export class AppComponent implements AfterViewInit  {
   respuestas: Respuesta[] = [];
   sub: Subscription = new Subscription();
-  constructor(private crearPregunta: CrearpreguntaService,private prueba: CrearComponenteService,private tablero: TableroComponent,private gestorDeTurnos: GestordeturnosService) {
+  quesitos: string[] = [];
+  debounce: boolean = true;
+  constructor(private crearPregunta: CrearpreguntaService,private prueba: CrearComponenteService,private tablero: TableroComponent,private gestorDeTurnos: GestordeturnosService,private handlerQuesitos: QuesitosService) {
     }
-  ngOnInit(): void{
-    console.log("Aplicacion iniciada")
-  
-    
-  }
   ngAfterViewInit(): void {
-    console.log("Desde fuera");
-    
+    console.log("Aplicacion iniciada")
   }
   manejaraterrizaje(casilla: Casilla){
     
    this.insertarCuestionario(casilla.categoria,(preguntaEsCorrecta: boolean,categoria:string)=>{
     console.log("Respuesta: ",preguntaEsCorrecta)
-      if (preguntaEsCorrecta){
-        
+      if (preguntaEsCorrecta && this.debounce){
+        if (this.handlerQuesitos.findQuesito(categoria)==false){
+        this.handlerQuesitos.cambiarColor(categoria)
+        this.handlerQuesitos.addQuesito(categoria)
+        this.debounce = false;
+        }
       } else{
-
+        this.debounce = true;
       }
   })
   }

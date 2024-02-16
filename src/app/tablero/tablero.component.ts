@@ -1,15 +1,33 @@
 // tablero.component.ts
-import { Component, ElementRef, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Injectable, OnInit, Output,Renderer2, ViewChild } from '@angular/core';
 import { Casilla } from '../casilla';
 import { Observable, Subject } from 'rxjs';
 import { GestordeturnosService } from '../gestordeturnos.service';
 import { take } from 'rxjs';
+import { QuesitosService } from '../quesitos.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
   styleUrls: ['./tablero.component.css'],
-  standalone: true
+  standalone: true,
+  animations: [
+    trigger('victory', [
+      state('inactive', style({
+        transform: 'scale(1)',
+        opacity: 0.5,
+      })),
+      state('active', style({
+        transform: 'scale(1.2)',
+        opacity: 1,
+        height: '100px',
+        flex: 1,
+        margin: 'auto',
+      })),
+      transition('inactive => active', animate('500ms ease-in')),
+    ]),
+  ],
 })
 
 @Injectable({
@@ -21,16 +39,9 @@ export class TableroComponent implements OnInit {
  // public puedeTirar: boolean = true;
   estadoFicha: string = "A1"
   respuesta: Casilla = {categoria:  "",posicion: ""}
-  public colorDefecto = "#000000"
-  public colorGeografia = "#00ffff"
-  public colorEntretenimiento = "#ff738a"
-  public colorHistoria = "#ffff00"
-  public colorDeportes = "#ffa500"
-  public colorCiencias = "#008000"
-  public colorArte = "#800080"
-
-  public quesitoGeografia = document.getElementById("geografia");
-  public quesitoHistoria = document.getElementById("historia");
+  
+  public quesitos: HTMLElement[] = [];
+  victoria = 'inactive'
   /*
    id="arte-y-literatura"></div>
  id="historia"></div>
@@ -39,37 +50,27 @@ export class TableroComponent implements OnInit {
  id="geografia"></div>
  id="deportes-y-pasatiempos"></div>
   */
-  public quesitoDeporte = document.getElementById("deportes-y-pasamientos")
-  public quesitoEntretenimiento = document.getElementById("entretenimiento")
-  public quesitoArte = document.getElementById("arte-y-literatura")
-  public quesitoCiencias = document.getElementById("ciencias-y-naturaleza")
+  public quesitoDeporte: HTMLElement;
+  public quesitoEntretenimiento: HTMLElement;
+  public quesitoArte: HTMLElement;
+  public quesitoCiencias: HTMLElement;
+  public quesitoGeografia: HTMLElement;
+  public quesitoHistoria: HTMLElement;
+  
+  public terrenoJuego!: HTMLElement;
 
-  cambiarColor(categoria:string): void{
-    switch(categoria){
-      case "geografia":
-        this.quesitoGeografia!.style.backgroundColor=this.colorGeografia
-        break;
-      case "historia":
-        this.quesitoHistoria!.style.backgroundColor=this.colorHistoria
-        break;
-      case "entretenimiento":
-        this.quesitoEntretenimiento!.style.backgroundColor=this.colorEntretenimiento
-        break;
-      case "arte-y-literatura":
-        this.quesitoArte!.style.backgroundColor=this.colorArte
-        break;
-      case "ciencias-y-naturaleza":
-        this.quesitoCiencias!.style.backgroundColor=this.colorCiencias
-        break;
-      case "deportes-y-pasamientos":
-        this.quesitoDeporte!.style.backgroundColor=this.colorDeportes
-        break;
-      default:
-        break;
-    }
+
+  constructor(private elementRef: ElementRef, private turnos: GestordeturnosService,private manejoQuesos: QuesitosService,private renderer: Renderer2) {     this.quesitoGeografia = document.getElementById("geografia")!;
+  this.quesitoHistoria = document.getElementById("historia")!;
+  this.quesitoDeporte = document.getElementById("deportes-y-pasatiempos")!;
+  this.quesitoEntretenimiento = document.getElementById("entretenimiento")!;
+  this.quesitoArte = document.getElementById("arte-y-literatura")!;
+  this.quesitoCiencias = document.getElementById("ciencias-y-naturaleza")!;}
+  
+  getQuesitos(): HTMLElement[]{
+    return this.quesitos;
   }
 
-  constructor(private elementRef: ElementRef,private turnos: GestordeturnosService) {}
   ngOnInit(): void {
     var categorias = ["arte-y-literatura", "geografia", "entretenimiento", "historia", "ciencias-y-naturaleza", "deportes-y-pasatiempos"];
 
@@ -99,6 +100,21 @@ export class TableroComponent implements OnInit {
     } else {
       console.error("El elemento con ID 'A1' o 'ficha' no fue encontrado.");
     }
+    this.quesitoGeografia = document.getElementById("geografia")!;
+    this.quesitoHistoria = document.getElementById("historia")!;
+    this.quesitoDeporte = document.getElementById("deportes-y-pasatiempos")!;
+    this.quesitoEntretenimiento = document.getElementById("entretenimiento")!;
+    this.quesitoArte = document.getElementById("arte-y-literatura")!;
+    this.quesitoCiencias = document.getElementById("ciencias-y-naturaleza")!;
+    if (this.quesitoArte && this.quesitoCiencias && this.quesitoDeporte && this.quesitoEntretenimiento && this.quesitoGeografia && this.quesitoHistoria){
+      this.quesitos.push(this.quesitoArte, this.quesitoCiencias, this.quesitoDeporte , this.quesitoEntretenimiento , this.quesitoGeografia , this.quesitoHistoria)
+      console.log(this.quesitos)
+      this.manejoQuesos.setQuesitos(this.quesitos);
+    } else{
+      console.log("Alguno de los quesitos es null","\nArte",this.quesitoArte,"\nCiencias", this.quesitoCiencias,"\nDeporte", this.quesitoDeporte ,"\nEntretenimiento", this.quesitoEntretenimiento ,"\nGeografia", this.quesitoGeografia , "\nHistoria",this.quesitoHistoria)
+    }
+    this.terrenoJuego = document.getElementById("contenedor-juego")!
+   
   }
   @Output() tiradaDado$ = new EventEmitter<Casilla>();
   buscarFicha(): string{
@@ -113,9 +129,11 @@ export class TableroComponent implements OnInit {
   }
   tirarDado(): void {
     this.turnos.puedetirar$.pipe(take(1)).subscribe((puedeTirar) =>{
-      console.log(puedeTirar)
+      console.log("Puede tirar",puedeTirar)
+      console.log(this.manejoQuesos.getQuesitosCorrectos(),this.manejoQuesos.getQuesitosCorrectos().length)
     const filas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
     if (puedeTirar) {
+      if (this.manejoQuesos.getQuesitosCorrectos().length !=6){
       const tirada = Math.floor(Math.random() * (6 - 1)) + 1;
       this.resultado = "Resultado: " + tirada;
   
@@ -174,6 +192,14 @@ export class TableroComponent implements OnInit {
       }
       }
     }
+  } else if(this.manejoQuesos.getQuesitosCorrectos().length == 6) {
+    this.terrenoJuego.style.display="none";
+    this.terrenoJuego.innerHTML = ""
+      this.victoria = 'active'
+    if (this.terrenoJuego){
+      this.terrenoJuego.remove()
+    }
+  }
   })
   }
   
