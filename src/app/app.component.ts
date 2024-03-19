@@ -1,6 +1,5 @@
 // app.component.ts
 import { Component, OnInit,ViewChild, ViewContainerRef, AfterViewInit,ChangeDetectorRef } from '@angular/core';
-import { FichaComponent } from './ficha/ficha.component'; // Asegúrate de tener el camino correcto hacia el componente de ficha
 import { TableroComponent } from './tablero/tablero.component'; // Asegúrate de tener el camino correcto hacia el componente de tablero
 import { Respuesta } from './respuesta';
 import { CrearpreguntaService } from './crearpregunta.service';
@@ -17,7 +16,7 @@ import { QuesitosService } from './quesitos.service';
 <ng-container id="cuestionarioContainer"></ng-container>
 ` ,
 styleUrl: './app.component.css',
-  imports: [FichaComponent,TableroComponent],
+  imports: [TableroComponent],
   providers: [GestordeturnosService,CrearpreguntaService,CrearComponenteService]
 })
 
